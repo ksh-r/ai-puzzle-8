@@ -1,9 +1,15 @@
 /* Environment for Puzzle 8:
+Variables:
+    state: 2D character array to store the current state
+    emptyCoords: array to store current empty space location
+                 0th index -> row value of empty space
+                 1st index -> column value of empty space
 
 Functions:
     newGame: Creates a random solvable state
     getActions: Returns a string of possible moves of the empty space
-    
+    move: Moves the empty space to the specified position
+    printCurrentState: Prints state array on the console
 */
 
 import java.util.Arrays;
