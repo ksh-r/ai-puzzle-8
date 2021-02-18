@@ -6,14 +6,17 @@ Variables:
                  1st index -> column value of empty space
 Functions:
     newGame: Creates a random solvable state
+    newDepthGame: Creates a random solvable state at specified depth
     getActions: Returns a string of possible moves of the empty space
     move: Moves the empty space to the specified position
     printCurrentState: Prints state array on the console
+    checkGoal: Returns true if the current state is the goal state
 */
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 class tileGame {
 
@@ -87,6 +90,45 @@ class tileGame {
                 temp++;
             }
         }
+    }
+
+    void newDepthGame(int d) {
+        // Setting state = goal state
+        char temp = '1';
+        for(int i = 0; i < 3; i++) {
+            for(int j = 0; j < 3; j++) {
+                state[i][j] = temp++;
+            }
+        }
+        state[2][2] = ' ';
+        emptyCoords[0] = 2;
+        emptyCoords[1] = 2;
+
+        // Making D random moves
+        char prevMove = '\0';
+        for(int i = 0; i < d; i++) {
+            String legalMoves = getActions();
+            char currMove = randomMove(legalMoves, prevMove);
+            move(currMove);
+            prevMove = currMove;
+        }
+    }
+
+    char randomMove(String legalMoves, char prevMove) {
+        // Removing opposite of previous move, to avoid reaching previous state
+        if(prevMove == 'U') {
+            legalMoves = legalMoves.replace("D", "");
+        } else if(prevMove == 'D'){
+            legalMoves = legalMoves.replace("U", "");
+        }else if(prevMove == 'L'){
+            legalMoves = legalMoves.replace("R", "");
+        }else if(prevMove == 'R'){
+            legalMoves = legalMoves.replace("L", "");
+        }
+
+        // Selecting a random move
+        int randomIndex = ThreadLocalRandom.current().nextInt(0, legalMoves.length());
+        return legalMoves.charAt(randomIndex);
     }
 
     Integer[] makeSolvable(Integer[] arr) {
