@@ -4,7 +4,6 @@ Variables:
     emptyCoords: array to store current empty space location
                  0th index -> row value of empty space
                  1st index -> column value of empty space
-
 Functions:
     newGame: Creates a random solvable state
     getActions: Returns a string of possible moves of the empty space
@@ -29,6 +28,11 @@ class tileGame {
         newGame();
 
         emptyCoords = getEmptyCoords();
+    }
+
+    boolean checkGoal() {
+        char[][] goal = {{'1', '2', '3'}, {'4', '5', '6'}, {'7', '8', ' '}};
+        return Arrays.equals(goal, state);
     }
 
     String getActions() {
@@ -116,8 +120,8 @@ class tileGame {
         return coords;
     }
 
-    void printCurrentState() {
-        System.out.println("Current state:");
+    void printCurrentState(String string) {
+        System.out.println(string);
         for(int i = 0; i < 3; i++) {
             for(int j = 0; j < 3; j++) {
                 System.out.print(state[i][j] + " ");
