@@ -1,18 +1,34 @@
 import java.util.LinkedList;
 import java.util.Queue;
 
-class agent {
+public class agent {
 
     static tileGame game;
-    
+    private static long startTime, stopTime;
+    private static final long MEGABYTE = 1024L * 1024L;
+
+    public static long bytesToMegabytes(long bytes) {
+        return bytes / MEGABYTE;
+    }
+
     public static void main(String args[]) {
+
+        Runtime runtime = Runtime.getRuntime();
+        runtime.gc(); // Run the garbage collector
+    
         game = new tileGame();
         game.newDepthGame(15);
         game.printCurrentState("Initial State :");
         // char[][] startState = copyState();
         BreadthFirstSearch();
         game.printCurrentState("Final State :");
+
+        // Calculate the used time and memory
+        long memory = runtime.totalMemory() - runtime.freeMemory();
+        System.out.println("Used memory: " + memory + " bytes | " + bytesToMegabytes(memory) + " megabytes.");
+        System.out.println("Used time: " + (stopTime - startTime) + " milliseconds.");
     }
+
     public static void BreadthFirstSearch() {
         startTime = System.currentTimeMillis();
 
@@ -48,6 +64,7 @@ class agent {
         stopTime = System.currentTimeMillis();
         System.out.println("Moves: " + goalPath);
     }
+
     static char[][] copyState() {
         char[][] arr = new char[3][3];
         for (int i = 0; i < 3; i++) {
