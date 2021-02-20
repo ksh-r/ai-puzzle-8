@@ -3,8 +3,12 @@ A breadth-first-search (BFS) algorithm to solve the Puzzle 8 problem.
 Note: BFS is used only to analyse the time and space complexity, optimally a heuristic based algorithm
       should be used to solve teh problem efficiently
 Variables:
-    game: object which stores the current game state, computes the moves and checks if goal is reached.
+    game: object which stores the current game state, computes the moves and checks if goal is reached
     startTime, stopTime: used to calcute total time taken by the BFS function
+Functions:
+    main: creates new game object, calls BFS function and prints time and space used
+    breadthFirstSearch: prints the winning moves given the game object
+    copyState: returns a deep copy of current game state
 */
 
 import java.util.LinkedList;
@@ -29,7 +33,7 @@ public class agent {
         game.newDepthGame(15);
         game.printCurrentState("Initial State :");
         // char[][] startState = copyState();
-        BreadthFirstSearch();
+        breadthFirstSearch();
         game.printCurrentState("Final State :");
 
         // Calculate the used time and memory
@@ -38,17 +42,20 @@ public class agent {
         System.out.println("Used time: " + (stopTime - startTime) + " milliseconds.");
     }
 
-    public static void BreadthFirstSearch() {
+    public static void breadthFirstSearch() {
+        // Marking start time of BFS function
         startTime = System.currentTimeMillis();
 
         Queue<String> queue = new LinkedList<>();
+
         String initialMoves = game.getActions(), currMove, goalPath = "", nextMoves;
         char ch;
         for (int i = 0; i < initialMoves.length(); i++)
             queue.add(Character.toString(initialMoves.charAt(i)));
+
         while (!queue.isEmpty()) {
             currMove = queue.poll();
-            // System.out.print(currMove + " ");
+            // System.out.print(currMove + " "); // To print the queue
             for (int i = 0; i < currMove.length(); i++)
                 game.move(currMove.charAt(i));
             if (game.checkGoal()) {
@@ -70,6 +77,8 @@ public class agent {
                     game.move('L');
             }
         }
+
+        // Marking end time of BFS function
         stopTime = System.currentTimeMillis();
         System.out.println("Moves: " + goalPath);
     }
