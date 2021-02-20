@@ -1,3 +1,12 @@
+/* Agent for Puzzle 8:
+A breadth-first-search (BFS) algorithm to solve the Puzzle 8 problem.
+Note: BFS is used only to analyse the time and space complexity, optimally a heuristic based algorithm
+      should be used to solve teh problem efficiently
+Variables:
+    game: object which stores the current game state, computes the moves and checks if goal is reached.
+    startTime, stopTime: used to calcute total time taken by the BFS function
+*/
+
 import java.util.LinkedList;
 import java.util.Queue;
 
