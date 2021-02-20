@@ -9,3 +9,5 @@ Algorithm: Breadth First Search
   - Or remove `game.newGameDepth(15)` to solve a completely random state
 
 ## Demo:
+Initial game state: Random state with depth = 12
+![Demo image](./demo_image.png)
