@@ -10,4 +10,5 @@ Algorithm: Breadth First Search
 
 ## Demo:
 Initial game state: Random state with depth = 12
+
 ![Demo image](./demo_image.png)
