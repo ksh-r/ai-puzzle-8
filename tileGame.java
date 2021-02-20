@@ -23,22 +23,32 @@ class tileGame {
     public char[][] state;
     public int[] emptyCoords;
 
-    tileGame() {
+    public tileGame() {
         state = new char[3][3];
         emptyCoords = new int[2];
 
         // Creating starting state
         newGame();
-
-        emptyCoords = getEmptyCoords();
+        updateEmptyCoords();
     }
 
-    boolean checkGoal() {
-        char[][] goal = {{'1', '2', '3'}, {'4', '5', '6'}, {'7', '8', ' '}};
-        return Arrays.equals(goal, state);
+    public boolean checkGoal() {
+        int flag = 0;
+        char ch = '1';
+        for(int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if(state[i][j] != ch)
+                    flag++;
+                ch++;
+            }
+        }
+        if(flag > 1)
+            return false;
+        else
+            return true;
     }
 
-    String getActions() {
+    public String getActions() {
         String actions = "";
         if(emptyCoords[0] > 0)
             actions += 'U';
@@ -51,7 +61,7 @@ class tileGame {
         return actions;
     }
 
-    void move(char ch) {
+    public void move(char ch) {
         if(ch == 'L') {
             state[emptyCoords[0]][emptyCoords[1]] = state[emptyCoords[0]][emptyCoords[1] - 1];
             state[emptyCoords[0]][--emptyCoords[1]] = ' ';
@@ -67,7 +77,7 @@ class tileGame {
         }
     }
 
-    void newGame() {
+    public void newGame() {
         Integer[] initial = {1, 2, 3, 4, 5, 6, 7, 8, 9};
 
         // Randomizing the starting position
@@ -92,7 +102,7 @@ class tileGame {
         }
     }
 
-    void newDepthGame(int d) {
+    public void newDepthGame(int d) {
         // Setting state = goal state
         char temp = '1';
         for(int i = 0; i < 3; i++) {
@@ -114,7 +124,7 @@ class tileGame {
         }
     }
 
-    char randomMove(String legalMoves, char prevMove) {
+    private char randomMove(String legalMoves, char prevMove) {
         // Removing opposite of previous move, to avoid reaching previous state
         if(prevMove == 'U') {
             legalMoves = legalMoves.replace("D", "");
@@ -131,7 +141,7 @@ class tileGame {
         return legalMoves.charAt(randomIndex);
     }
 
-    Integer[] makeSolvable(Integer[] arr) {
+    private Integer[] makeSolvable(Integer[] arr) {
         int inversion = 0;
         for(int i = 0; i < 8; i++) {
             for(int j = i+1; j < 9; j++) {
@@ -149,7 +159,7 @@ class tileGame {
         return arr;
     }
 
-    int[] getEmptyCoords() {
+    public void updateEmptyCoords() {
         int[] coords = {0, 0};
         for(int i = 0; i < 3; i++) {
             for(int j = 0; j < 3; j++) {
@@ -159,10 +169,10 @@ class tileGame {
                 }
             }
         }
-        return coords;
+        emptyCoords = coords;
     }
 
-    void printCurrentState(String string) {
+    public void printCurrentState(String string) {
         System.out.println(string);
         for(int i = 0; i < 3; i++) {
             for(int j = 0; j < 3; j++) {
